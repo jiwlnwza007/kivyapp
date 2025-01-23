@@ -1,7 +1,7 @@
+# ใช้ฟอนต์ที่รองรับภาษาไทย
 <TodoLayout>:
     orientation: 'vertical'
     
-    # ใช้ BoxLayout แทน ActionBar เพื่อจัดเรียงปุ่ม
     BoxLayout:
         size_hint: 1, None
         height: 50
@@ -10,12 +10,12 @@
         Button:
             text: 'เพิ่มงาน'
             on_press: app.add_task(root.ids.task_input.text)
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun'  
         
         Button:
             text: 'ลบงานทั้งหมด'
             on_press: app.clear_tasks(None)
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun'  
 
     TextInput:
         id: task_input
@@ -23,7 +23,7 @@
         size_hint: 1, None
         height: 40
         on_text_validate: app.add_task(task_input.text)
-        font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+        font_name: 'Sarabun'  
     
     ScrollView:
         size_hint: 1, 1
@@ -33,6 +33,7 @@
             orientation: 'vertical'
             size_hint_y: None
             height: self.minimum_height
+            padding: [0, 50, 0, 0]  # [left, top, right, bottom]
     
     GridLayout:
         cols: 2
@@ -41,23 +42,23 @@
         
         Label:
             text: "จัดเรียงตาม:"
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun' 
         
         Spinner:
             text: "ชื่อ"
             values: ("ชื่อ", "วันที่")
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun'  
         
         Label:
             text: "เปิดการแจ้งเตือน"
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun'  
         
         Switch:
             active: True
-            font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+            font_name: 'Sarabun'  
 
 <Button>:
-    font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+    font_name: 'Sarabun'  
 
 <Label>:
-    font_name: 'Sarabun'  # ใช้ฟอนต์ที่รองรับภาษาไทย
+    font_name: 'Sarabun'  
