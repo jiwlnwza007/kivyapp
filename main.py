@@ -31,7 +31,7 @@ class TodoApp(App):
         task_button_edit = Button(text='Edit', size_hint=(None, None), width=60)
         task_button_delete = Button(text='Delete', size_hint=(None, None), width=60)
         
-        # การเชื่อมโยงกับปุ่ม Edit และ Delete
+        # ปุ่ม Edit และ Delete
         task_button_edit.bind(on_press=self.edit_task)
         task_button_delete.bind(on_press=self.delete_task)
         
@@ -44,26 +44,49 @@ class TodoApp(App):
         # เพิ่ม task_box ไปที่ task_layout
         self.root.ids.task_layout.add_widget(task_box)
         
-        # รีเซ็ต text input
+        # reset text input
         self.root.ids.task_input.text = ''
         self.task_list.append(task_text)
 
     def delete_task(self, instance):
         task_box = instance.parent
-        self.root.ids.task_layout.remove_widget(task_box)
-        self.task_list.remove(task_box.children[1].text)
+
+        # ค้นหา Label ที่เก็บข้อความของงาน
+        task_label = None
+        for widget in task_box.children:
+            if isinstance(widget, Label):
+                task_label = widget
+                break
+
+        if task_label:
+            task_text = task_label.text
+            if task_text in self.task_list:
+                self.task_list.remove(task_text)
+            self.root.ids.task_layout.remove_widget(task_box)
+        else:
+            print("Warning: Task label not found")
 
     def edit_task(self, instance):
         task_box = instance.parent
-        task_label = task_box.children[1]
-        task_text = task_label.text
-        self.root.ids.task_input.text = task_text
-        self.root.ids.task_layout.remove_widget(task_box)
-        self.task_list.remove(task_text)
+        
+        # ค้นหา Label ที่เก็บข้อความของงาน
+        task_label = None
+        for widget in task_box.children:
+            if isinstance(widget, Label):
+                task_label = widget
+                break
 
-    def clear_tasks(self, instance):
-        self.root.ids.task_layout.clear_widgets()
-        self.task_list.clear()
+        if task_label:
+            task_text = task_label.text
+            self.root.ids.task_input.text = task_text  # นำข้อความไปใส่ text input
+
+            # ลบ task ออกจาก layout และ list
+            if task_text in self.task_list:
+                self.task_list.remove(task_text)
+            self.root.ids.task_layout.remove_widget(task_box)
+        else:
+            print("Warning: Task label not found")
+
 
 
 class TodoLayout(BoxLayout):
