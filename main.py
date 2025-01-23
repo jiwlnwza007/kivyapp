@@ -87,6 +87,9 @@ class TodoApp(App):
         else:
             print("Warning: Task label not found")
 
+    def clear_tasks(self, instance):
+        self.root.ids.task_layout.clear_widgets()
+        self.task_list.clear()
 
 
 class TodoLayout(BoxLayout):
