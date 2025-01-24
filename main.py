@@ -11,12 +11,38 @@ from kivy.uix.spinner import Spinner
 from kivy.core.text import LabelBase
 from kivy.resources import resource_add_path
 from kivy.graphics import Color, Rectangle
+from kivy.utils import get_color_from_hex
+from kivy.properties import ListProperty
 
-# เพิ่มฟอนต์ภาษาไทย
-#resource_add_path('path_to_font_folder')  # กำหนด path ที่เก็บฟอนต์
-LabelBase.register(name='Sarabun', fn_regular='THSarabun.ttf')
+# Add the path to the font file
+resource_add_path('fonts')  # Replace 'fonts' with the correct path to the folder containing the font file
+
+# Register the font
+LabelBase.register(name='BoonJot-Italic', fn_regular='BoonJot-Italic.ttf')
+
+class CustomCheckBox(CheckBox):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(active=self.update_color)
+        self.update_color()
+
+    def update_color(self, *args):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            if self.active:
+                Color(0, 1, 0, 1)  # สีเขียวเมื่อถูกเลือก
+            else:
+                Color(1, 0, 0, 1)  # สีแดงเมื่อไม่ถูกเลือก
+            Rectangle(pos=self.pos, size=self.size)
 
 class TodoApp(App):
+    # Define colors as properties
+    pastel_pink = ListProperty(get_color_from_hex('#FFD1DC'))  # Pastel Pink
+    pastel_blue = ListProperty(get_color_from_hex('#A2DDF0'))  # Pastel Blue
+    pastel_green = ListProperty(get_color_from_hex('#B2F2BB'))  # Pastel Green
+    pastel_gray = ListProperty(get_color_from_hex('#E0E0E0'))  # Pastel Gray
+    dark_text = ListProperty(get_color_from_hex('#333333'))  # Dark Text
+
     def build(self):
         self.task_list = []
         return TodoLayout()
@@ -25,11 +51,43 @@ class TodoApp(App):
         if task_text.strip() == '':
             return
         
-        task_box = BoxLayout(size_hint_y=None, height=50, padding=[10, 5], spacing=10)
-        task_checkbox = CheckBox(size_hint=(None, None), width=30, height=30, color=[0.64, 0.40, 0.67, 1])  # Purple
-        task_label = Label(text=task_text, size_hint=(None, None), width=300, font_name='Sarabun', color=[0.29, 0.13, 0.25, 1])  # Dark purple
-        task_button_edit = Button(text='Edit', size_hint=(None, None), width=60, background_color=[0.64, 0.40, 0.67, 1], color=[1, 1, 1, 1])  # Purple
-        task_button_delete = Button(text='Delete', size_hint=(None, None), width=60, background_color=[0.64, 0.40, 0.67, 1], color=[1, 1, 1, 1])  # Purple
+        task_box = BoxLayout(size_hint_y=None, height=60, padding=[10, 5], spacing=10)
+        task_checkbox = CustomCheckBox(
+            size_hint=(None, None), 
+            width=40, 
+            height=40
+        )
+        task_label = Label(
+            text=task_text, 
+            size_hint=(None, None), 
+            width=300, 
+            font_name='BoonJot-Italic', 
+            color=self.dark_text,  # Dark Text
+            halign='left', 
+            valign='middle',
+            text_size=(300, None),
+            font_size=16
+        )
+        task_button_edit = Button(
+            text='Edit', 
+            size_hint=(None, None), 
+            width=80, 
+            height=40, 
+            background_color=self.pastel_blue,  # Pastel Blue
+            color=self.dark_text,  # Dark Text
+            font_name='BoonJot-Italic', 
+            font_size=14
+        )
+        task_button_delete = Button(
+            text='Delete', 
+            size_hint=(None, None), 
+            width=80, 
+            height=40, 
+            background_color=self.pastel_pink,  # Pastel Pink
+            color=self.dark_text,  # Dark Text
+            font_name='BoonJot-Italic',  
+            font_size=14
+        )
         
         task_button_edit.bind(on_press=self.edit_task)
         task_button_delete.bind(on_press=self.delete_task)
@@ -87,9 +145,9 @@ class TodoApp(App):
 
         if task_label:
             if value:
-                task_label.color = [0.64, 0.40, 0.67, 1]  # Purple for completed tasks
+                task_label.color = self.pastel_green  # สีเขียวเมื่อเสร็จสิ้น
             else:
-                task_label.color = [0.29, 0.13, 0.25, 1]  # Dark purple for incomplete tasks
+                task_label.color = self.dark_text  # สีเดิมเมื่อไม่เสร็จสิ้น
 
     def clear_tasks(self, instance):
         self.root.ids.task_layout.clear_widgets()
@@ -117,7 +175,8 @@ class TodoLayout(BoxLayout):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
         with self.canvas.before:
-            Color(0.97, 0.91, 0.93, 1)  # Light pink background
+            # Pastel Pink background
+            Color(rgba=get_color_from_hex('#FFD1DC'))  # Pastel Pink
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
 
