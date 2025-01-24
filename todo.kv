@@ -5,22 +5,27 @@
     
     BoxLayout:
         size_hint: 1, None
-        height: 50
+        height: 60
         spacing: 10
+        padding: [0, 10]
 
         Button:
             text: 'เพิ่มงาน'
             on_press: app.add_task(root.ids.task_input.text)
-            font_name: 'Sarabun'
-            background_color: [0.64, 0.40, 0.67, 1]  # Purple
-            color: [1, 1, 1, 1]  # White text
+            font_name: 'BoonJot-Italic'
+            background_color: app.pastel_blue  # Pastel Blue
+            color: app.dark_text  # Dark Text
+            size_hint_x: 0.5
+            font_size: 16
         
         Button:
             text: 'ลบงานทั้งหมด'
             on_press: app.clear_tasks(None)
-            font_name: 'Sarabun'
-            background_color: [0.64, 0.40, 0.67, 1]  # Purple
-            color: [1, 1, 1, 1]  # White text
+            font_name: 'BoonJot-Italic'
+            background_color: app.pastel_pink  # Pastel Pink
+            color: app.dark_text  # Dark Text
+            size_hint_x: 0.5
+            font_size: 16
 
     TextInput:
         id: task_input
@@ -28,10 +33,12 @@
         size_hint: 1, None
         height: 50
         on_text_validate: app.add_task(task_input.text)
-        font_name: 'Sarabun'
-        background_color: [1, 1, 1, 1]  # White
-        foreground_color: [0.29, 0.13, 0.25, 1]  # Dark purple text
-        hint_text_color: [0.64, 0.40, 0.67, 0.5]  # Light purple hint text
+        font_name: 'BoonJot-Italic'
+        background_color: app.pastel_gray  # Pastel Gray
+        foreground_color: app.dark_text  # Dark Text
+        hint_text_color: app.dark_text  # Dark Text
+        padding: [10, 10]
+        font_size: 16
     
     ScrollView:
         size_hint: 1, 1
@@ -49,34 +56,47 @@
         size_hint_y: None
         height: 100
         spacing: 10
+        padding: [0, 10]
         
         Label:
             text: "จัดเรียงตาม:"
-            font_name: 'Sarabun'
-            color: [0.29, 0.13, 0.25, 1]  # Dark purple
+            font_name: 'BoonJot-Italic'
+            color: app.dark_text  # Dark Text
+            halign: 'center'
+            font_size: 16
         
         Spinner:
             text: "ชื่อ"
             values: ("ชื่อ", "วันที่")
-            font_name: 'Sarabun'
-            background_color: [0.64, 0.40, 0.67, 1]  # Purple
-            color: [1, 1, 1, 1]  # White text
+            font_name: 'BoonJot-Italic'
+            background_color: app.pastel_blue  # Pastel Blue
+            color: app.dark_text  # Dark Text
             on_text: app.sort_tasks
+            size_hint_x: 0.8
+            font_size: 14
         
         Label:
             text: "เปิดการแจ้งเตือน"
-            font_name: 'Sarabun'
-            color: [0.29, 0.13, 0.25, 1]  # Dark purple
+            font_name: 'BoonJot-Italic'
+            color: app.dark_text  # Dark Text
+            halign: 'center'
+            font_size: 16
         
         Switch:
             active: True
             on_active: app.toggle_notifications
+            size_hint_x: 0.2
 
 <Button>:
-    font_name: 'Sarabun'
-    background_color: [0.64, 0.40, 0.67, 1]  # Purple
-    color: [1, 1, 1, 1]  # White text
+    font_name: 'BoonJot-Italic'
+    background_color: app.pastel_pink  # Pastel Pink
+    color: app.dark_text  # Dark Text
+    font_size: 16
 
 <Label>:
-    font_name: 'Sarabun'
-    color: [0.29, 0.13, 0.25, 1]  # Dark purple
+    font_name: 'BoonJot-Italic'
+    color: app.dark_text  # Dark Text
+    halign: 'center'
+    valign: 'middle'
+    text_size: self.size
+    font_size: 16
