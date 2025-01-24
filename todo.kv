@@ -13,8 +13,8 @@
             text: 'เพิ่มงาน'
             on_press: app.add_task(root.ids.task_input.text)
             font_name: 'BoonJot-Italic'
-            background_color: app.pastel_blue  # Pastel Blue
-            color: app.dark_text  # Dark Text
+            background_color: app.white  # White
+            color: app.black  # Black Text
             size_hint_x: 0.5
             font_size: 16
         
@@ -22,8 +22,8 @@
             text: 'ลบงานทั้งหมด'
             on_press: app.clear_tasks(None)
             font_name: 'BoonJot-Italic'
-            background_color: app.pastel_pink  # Pastel Pink
-            color: app.dark_text  # Dark Text
+            background_color: app.white  # White
+            color: app.black  # Black Text
             size_hint_x: 0.5
             font_size: 16
 
@@ -34,9 +34,9 @@
         height: 50
         on_text_validate: app.add_task(task_input.text)
         font_name: 'BoonJot-Italic'
-        background_color: app.pastel_gray  # Pastel Gray
-        foreground_color: app.dark_text  # Dark Text
-        hint_text_color: app.dark_text  # Dark Text
+        background_color: app.white  # White
+        foreground_color: app.black  # Black Text
+        hint_text_color: app.light_gray  # Light Gray
         padding: [10, 10]
         font_size: 16
     
@@ -61,7 +61,7 @@
         Label:
             text: "จัดเรียงตาม:"
             font_name: 'BoonJot-Italic'
-            color: app.dark_text  # Dark Text
+            color: app.black  # Black Text
             halign: 'center'
             font_size: 16
         
@@ -69,8 +69,8 @@
             text: "ชื่อ"
             values: ("ชื่อ", "วันที่")
             font_name: 'BoonJot-Italic'
-            background_color: app.pastel_blue  # Pastel Blue
-            color: app.dark_text  # Dark Text
+            background_color: app.white  # White
+            color: app.black  # Black Text
             on_text: app.sort_tasks
             size_hint_x: 0.8
             font_size: 14
@@ -78,7 +78,7 @@
         Label:
             text: "เปิดการแจ้งเตือน"
             font_name: 'BoonJot-Italic'
-            color: app.dark_text  # Dark Text
+            color: app.black  # Black Text
             halign: 'center'
             font_size: 16
         
@@ -89,13 +89,13 @@
 
 <Button>:
     font_name: 'BoonJot-Italic'
-    background_color: app.pastel_pink  # Pastel Pink
-    color: app.dark_text  # Dark Text
+    background_color: app.white  # White
+    color: app.black  # Black Text
     font_size: 16
 
 <Label>:
     font_name: 'BoonJot-Italic'
-    color: app.dark_text  # Dark Text
+    color: app.black  # Black Text
     halign: 'center'
     valign: 'middle'
     text_size: self.size
