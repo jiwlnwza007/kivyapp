@@ -1,29 +1,37 @@
-# ใช้ฟอนต์ที่รองรับภาษาไทย
 <TodoLayout>:
     orientation: 'vertical'
+    padding: [20, 10]
+    spacing: 10
     
     BoxLayout:
         size_hint: 1, None
         height: 50
-        padding: 10
+        spacing: 10
 
         Button:
             text: 'เพิ่มงาน'
             on_press: app.add_task(root.ids.task_input.text)
-            font_name: 'Sarabun'  
+            font_name: 'Sarabun'
+            background_color: [0.64, 0.40, 0.67, 1]  # Purple
+            color: [1, 1, 1, 1]  # White text
         
         Button:
             text: 'ลบงานทั้งหมด'
             on_press: app.clear_tasks(None)
-            font_name: 'Sarabun'  
+            font_name: 'Sarabun'
+            background_color: [0.64, 0.40, 0.67, 1]  # Purple
+            color: [1, 1, 1, 1]  # White text
 
     TextInput:
         id: task_input
         hint_text: 'กรุณากรอกงานใหม่'
         size_hint: 1, None
-        height: 40
+        height: 50
         on_text_validate: app.add_task(task_input.text)
-        font_name: 'Sarabun'  
+        font_name: 'Sarabun'
+        background_color: [1, 1, 1, 1]  # White
+        foreground_color: [0.29, 0.13, 0.25, 1]  # Dark purple text
+        hint_text_color: [0.64, 0.40, 0.67, 0.5]  # Light purple hint text
     
     ScrollView:
         size_hint: 1, 1
@@ -33,32 +41,42 @@
             orientation: 'vertical'
             size_hint_y: None
             height: self.minimum_height
-            padding: [0, 50, 0, 0]  # [left, top, right, bottom]
+            padding: [0, 10, 0, 0]
+            spacing: 10
     
     GridLayout:
         cols: 2
         size_hint_y: None
         height: 100
+        spacing: 10
         
         Label:
             text: "จัดเรียงตาม:"
-            font_name: 'Sarabun' 
+            font_name: 'Sarabun'
+            color: [0.29, 0.13, 0.25, 1]  # Dark purple
         
         Spinner:
             text: "ชื่อ"
             values: ("ชื่อ", "วันที่")
-            font_name: 'Sarabun'  
+            font_name: 'Sarabun'
+            background_color: [0.64, 0.40, 0.67, 1]  # Purple
+            color: [1, 1, 1, 1]  # White text
+            on_text: app.sort_tasks
         
         Label:
             text: "เปิดการแจ้งเตือน"
-            font_name: 'Sarabun'  
+            font_name: 'Sarabun'
+            color: [0.29, 0.13, 0.25, 1]  # Dark purple
         
         Switch:
             active: True
-            font_name: 'Sarabun'  
+            on_active: app.toggle_notifications
 
 <Button>:
-    font_name: 'Sarabun'  
+    font_name: 'Sarabun'
+    background_color: [0.64, 0.40, 0.67, 1]  # Purple
+    color: [1, 1, 1, 1]  # White text
 
 <Label>:
-    font_name: 'Sarabun'  
+    font_name: 'Sarabun'
+    color: [0.29, 0.13, 0.25, 1]  # Dark purple
