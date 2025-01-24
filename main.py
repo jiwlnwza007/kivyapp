@@ -10,9 +10,10 @@ from kivy.uix.switch import Switch
 from kivy.uix.spinner import Spinner
 from kivy.core.text import LabelBase
 from kivy.resources import resource_add_path
+from kivy.graphics import Color, Rectangle
 
 # เพิ่มฟอนต์ภาษาไทย
-#resource_add_path('path_to_font_folder')  # กำหนด path ที่เก็บฟอนต์
+resource_add_path('path_to_font_folder')  # กำหนด path ที่เก็บฟอนต์
 LabelBase.register(name='Sarabun', fn_regular='THSarabun.ttf')
 
 class TodoApp(App):
@@ -21,37 +22,30 @@ class TodoApp(App):
         return TodoLayout()
 
     def add_task(self, task_text):
-        # เพิ่มงานใหม่ลงใน task_layout
-        if task_text.strip() == '':  # ตรวจสอบว่าไม่ใช่ข้อความว่าง
+        if task_text.strip() == '':
             return
         
-        task_box = BoxLayout(size_hint_y=None, height=40)
-        task_checkbox = CheckBox(size_hint=(None, None), width=40, height=40)
-        task_label = Label(text=task_text, size_hint=(None, None), width=300, font_name='Sarabun')
-        task_button_edit = Button(text='Edit', size_hint=(None, None), width=60)
-        task_button_delete = Button(text='Delete', size_hint=(None, None), width=60)
+        task_box = BoxLayout(size_hint_y=None, height=50, padding=[10, 5], spacing=10)
+        task_checkbox = CheckBox(size_hint=(None, None), width=30, height=30, color=[0.64, 0.40, 0.67, 1])  # Purple
+        task_label = Label(text=task_text, size_hint=(None, None), width=300, font_name='Sarabun', color=[0.29, 0.13, 0.25, 1])  # Dark purple
+        task_button_edit = Button(text='Edit', size_hint=(None, None), width=60, background_color=[0.64, 0.40, 0.67, 1], color=[1, 1, 1, 1])  # Purple
+        task_button_delete = Button(text='Delete', size_hint=(None, None), width=60, background_color=[0.64, 0.40, 0.67, 1], color=[1, 1, 1, 1])  # Purple
         
-        # ปุ่ม Edit และ Delete
         task_button_edit.bind(on_press=self.edit_task)
         task_button_delete.bind(on_press=self.delete_task)
+        task_checkbox.bind(active=self.mark_task_completed)
         
-        # เพิ่ม widget ไปที่ task_box
         task_box.add_widget(task_checkbox)
         task_box.add_widget(task_label)
         task_box.add_widget(task_button_edit)
         task_box.add_widget(task_button_delete)
         
-        # เพิ่ม task_box ไปที่ task_layout
         self.root.ids.task_layout.add_widget(task_box)
-        
-        # reset text input
         self.root.ids.task_input.text = ''
         self.task_list.append(task_text)
 
     def delete_task(self, instance):
         task_box = instance.parent
-
-        # ค้นหา Label ที่เก็บข้อความของงาน
         task_label = None
         for widget in task_box.children:
             if isinstance(widget, Label):
@@ -68,8 +62,6 @@ class TodoApp(App):
 
     def edit_task(self, instance):
         task_box = instance.parent
-        
-        # ค้นหา Label ที่เก็บข้อความของงาน
         task_label = None
         for widget in task_box.children:
             if isinstance(widget, Label):
@@ -78,24 +70,60 @@ class TodoApp(App):
 
         if task_label:
             task_text = task_label.text
-            self.root.ids.task_input.text = task_text  # นำข้อความไปใส่ text input
-
-            # ลบ task ออกจาก layout และ list
+            self.root.ids.task_input.text = task_text
             if task_text in self.task_list:
                 self.task_list.remove(task_text)
             self.root.ids.task_layout.remove_widget(task_box)
         else:
             print("Warning: Task label not found")
 
+    def mark_task_completed(self, instance, value):
+        task_box = instance.parent
+        task_label = None
+        for widget in task_box.children:
+            if isinstance(widget, Label):
+                task_label = widget
+                break
+
+        if task_label:
+            if value:
+                task_label.color = [0.64, 0.40, 0.67, 1]  # Purple for completed tasks
+            else:
+                task_label.color = [0.29, 0.13, 0.25, 1]  # Dark purple for incomplete tasks
+
     def clear_tasks(self, instance):
         self.root.ids.task_layout.clear_widgets()
         self.task_list.clear()
+
+    def sort_tasks(self, instance, text):
+        if text == "ชื่อ":
+            self.task_list.sort()
+        elif text == "วันที่":
+            # Implement date sorting logic here
+            pass
+        self.root.ids.task_layout.clear_widgets()
+        for task in self.task_list:
+            self.add_task(task)
+
+    def toggle_notifications(self, instance, value):
+        if value:
+            print("Notifications enabled")
+        else:
+            print("Notifications disabled")
 
 
 class TodoLayout(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
+        with self.canvas.before:
+            Color(0.97, 0.91, 0.93, 1)  # Light pink background
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+        self.bind(size=self._update_rect, pos=self._update_rect)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
 
 
 if __name__ == '__main__':
