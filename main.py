@@ -10,7 +10,7 @@ from kivy.uix.switch import Switch
 from kivy.uix.spinner import Spinner
 from kivy.core.text import LabelBase
 from kivy.resources import resource_add_path
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color, Rectangle, Line
 from kivy.utils import get_color_from_hex
 from kivy.properties import ListProperty
 
@@ -20,28 +20,27 @@ resource_add_path('fonts')  # Replace 'fonts' with the correct path to the folde
 # Register the font
 LabelBase.register(name='BoonJot-Italic', fn_regular='BoonJot-Italic.ttf')
 
-class CustomCheckBox(CheckBox):
+class MinimalCheckBox(CheckBox):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bind(active=self.update_color)
-        self.update_color()
+        self.bind(active=self.update_canvas, pos=self.update_canvas, size=self.update_canvas)
+        self.update_canvas()
 
-    def update_color(self, *args):
+    def update_canvas(self, *args):
         self.canvas.before.clear()
         with self.canvas.before:
             if self.active:
                 Color(0, 1, 0, 1)  # สีเขียวเมื่อถูกเลือก
             else:
-                Color(1, 0, 0, 1)  # สีแดงเมื่อไม่ถูกเลือก
-            Rectangle(pos=self.pos, size=self.size)
+                Color(0, 0, 0, 1)  # สีดำเมื่อไม่ถูกเลือก
+            Line(width=1.5, rectangle=(self.x, self.y, self.width, self.height))
 
 class TodoApp(App):
     # Define colors as properties
-    pastel_pink = ListProperty(get_color_from_hex('#FFD1DC'))  # Pastel Pink
-    pastel_blue = ListProperty(get_color_from_hex('#A2DDF0'))  # Pastel Blue
-    pastel_green = ListProperty(get_color_from_hex('#B2F2BB'))  # Pastel Green
-    pastel_gray = ListProperty(get_color_from_hex('#E0E0E0'))  # Pastel Gray
-    dark_text = ListProperty(get_color_from_hex('#333333'))  # Dark Text
+    white = ListProperty(get_color_from_hex('#FFFFFF'))  # White
+    black = ListProperty(get_color_from_hex('#000000'))  # Black
+    green = ListProperty(get_color_from_hex('#00FF00'))  # Green
+    light_gray = ListProperty(get_color_from_hex('#E0E0E0'))  # Light Gray
 
     def build(self):
         self.task_list = []
@@ -52,7 +51,7 @@ class TodoApp(App):
             return
         
         task_box = BoxLayout(size_hint_y=None, height=60, padding=[10, 5], spacing=10)
-        task_checkbox = CustomCheckBox(
+        task_checkbox = MinimalCheckBox(
             size_hint=(None, None), 
             width=40, 
             height=40
@@ -62,7 +61,7 @@ class TodoApp(App):
             size_hint=(None, None), 
             width=300, 
             font_name='BoonJot-Italic', 
-            color=self.dark_text,  # Dark Text
+            color=self.black,  # Black Text
             halign='left', 
             valign='middle',
             text_size=(300, None),
@@ -73,8 +72,8 @@ class TodoApp(App):
             size_hint=(None, None), 
             width=80, 
             height=40, 
-            background_color=self.pastel_blue,  # Pastel Blue
-            color=self.dark_text,  # Dark Text
+            background_color=self.white,  # White
+            color=self.black,  # Black Text
             font_name='BoonJot-Italic', 
             font_size=14
         )
@@ -83,8 +82,8 @@ class TodoApp(App):
             size_hint=(None, None), 
             width=80, 
             height=40, 
-            background_color=self.pastel_pink,  # Pastel Pink
-            color=self.dark_text,  # Dark Text
+            background_color=self.white,  # White
+            color=self.black,  # Black Text
             font_name='BoonJot-Italic',  
             font_size=14
         )
@@ -145,9 +144,9 @@ class TodoApp(App):
 
         if task_label:
             if value:
-                task_label.color = self.pastel_green  # สีเขียวเมื่อเสร็จสิ้น
+                task_label.color = self.green  # สีเขียวเมื่อเสร็จสิ้น
             else:
-                task_label.color = self.dark_text  # สีเดิมเมื่อไม่เสร็จสิ้น
+                task_label.color = self.black  # สีดำเมื่อไม่เสร็จสิ้น
 
     def clear_tasks(self, instance):
         self.root.ids.task_layout.clear_widgets()
@@ -175,8 +174,8 @@ class TodoLayout(BoxLayout):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
         with self.canvas.before:
-            # Pastel Pink background
-            Color(rgba=get_color_from_hex('#FFD1DC'))  # Pastel Pink
+            # White background
+            Color(rgba=get_color_from_hex('#FFFFFF'))  # White
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
 
