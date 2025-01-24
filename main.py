@@ -13,7 +13,7 @@ from kivy.resources import resource_add_path
 from kivy.graphics import Color, Rectangle
 
 # เพิ่มฟอนต์ภาษาไทย
-resource_add_path('path_to_font_folder')  # กำหนด path ที่เก็บฟอนต์
+#resource_add_path('path_to_font_folder')  # กำหนด path ที่เก็บฟอนต์
 LabelBase.register(name='Sarabun', fn_regular='THSarabun.ttf')
 
 class TodoApp(App):
