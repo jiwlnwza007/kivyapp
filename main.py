@@ -139,21 +139,29 @@ class TodoApp(App):
 
     # ฟังก์ชั่นแก้ไขงาน
     def edit_task(self, instance):
+        # ดึงข้อมูลจาก BoxLayout ที่เป็นพาเรนต์ของปุ่ม edit
         task_box = instance.parent
         task_label = None
-        for widget in task_box.children:
+
+        # วนลูปย้อนกลับเพื่อตรวจสอบ Label ก่อนปุ่ม
+        for widget in reversed(task_box.children):
             if isinstance(widget, Label):
                 task_label = widget
                 break
 
         if task_label:
-            task_text = task_label.text
-            self.root.ids.task_input.text = task_text
+            task_text = task_label.text  # ดึงข้อความจาก Label
+            self.root.ids.task_input.text = task_text  # ใส่ข้อความลงในช่องป้อนข้อมูล
+            
             if task_text in self.task_list:
-                self.task_list.remove(task_text)
-            self.root.ids.task_layout.remove_widget(task_box)
+                self.task_list.remove(task_text)  # ลบงานเก่าออกจากรายการ
+            
+            self.root.ids.task_layout.remove_widget(task_box)  # ลบ task_box ออกจาก UI
         else:
-            print("Warning: Task label not found")
+            print("Warning: Task label not found")  # แจ้งเตือนถ้าไม่พบ Label
+
+
+
 
     # ฟังก์ชั่นที่เปลี่ยนสีข้อความเมื่อทำเครื่องหมายเสร็จแล้ว
     def mark_task_completed(self, instance, value):
