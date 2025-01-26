@@ -30,6 +30,18 @@
             size_hint_x: 0.5
             font_size: 16
 
+        #ปุ่มเปลี่ยนธีม
+        Button:
+            text: 'โหมดมืด / สว่าง'
+            on_press: app.toggle_theme()
+            font_name: 'BoonJot-Italic'
+            background_color: app.black
+            color: app.white
+            size_hint: None, None
+            size: 120, 40  # ปรับขนาดให้เล็กลง
+            pos_hint: {'center_x': 0.5}  # จัดให้อยู่ตรงกลาง
+            font_size: 14
+
     # ช่องกรอกข้อความสำหรับเพิ่มงานใหม่
     TextInput:
         id: task_input  # ตั้งชื่อให้กับ TextInput
