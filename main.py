@@ -30,9 +30,9 @@ class MinimalCheckBox(CheckBox):
         self.canvas.before.clear()
         with self.canvas.before:
             if self.active:
-                Color(0, 1, 0, 1)  # สีเขียวเมื่อถูกเลือก
+                Color(0, 1, 0, 1)  # Green when checked
             else:
-                Color(0, 0, 0, 1)  # สีดำเมื่อไม่ถูกเลือก
+                Color(0, 0, 0, 1)  # Black when unchecked
             Line(width=1.5, rectangle=(self.x, self.y, self.width, self.height))
 
 class TodoApp(App):
@@ -144,9 +144,9 @@ class TodoApp(App):
 
         if task_label:
             if value:
-                task_label.color = self.green  # สีเขียวเมื่อเสร็จสิ้น
+                task_label.color = self.green  # Green when completed
             else:
-                task_label.color = self.black  # สีดำเมื่อไม่เสร็จสิ้น
+                task_label.color = self.black  # Black when incomplete
 
     def clear_tasks(self, instance):
         self.root.ids.task_layout.clear_widgets()
