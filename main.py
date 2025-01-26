@@ -54,7 +54,8 @@ class TodoApp(App):
         task_checkbox = MinimalCheckBox(
             size_hint=(None, None), 
             width=40, 
-            height=40
+            height=40,
+            pos_hint={'center_y': 0.5}  
         )
         task_label = Label(
             text=task_text, 
@@ -65,27 +66,30 @@ class TodoApp(App):
             halign='left', 
             valign='middle',
             text_size=(300, None),
-            font_size=16
+            font_size=16,
+            pos_hint={'center_y': 0.5}  
         )
         task_button_edit = Button(
             text='Edit', 
             size_hint=(None, None), 
             width=80, 
             height=40, 
-            background_color=self.white,  # White
+            background_color=self.white, 
             color=self.black,  # Black Text
             font_name='BoonJot-Italic', 
-            font_size=14
+            font_size=14,
+            pos_hint={'center_y': 0.5} 
         )
         task_button_delete = Button(
             text='Delete', 
             size_hint=(None, None), 
             width=80, 
             height=40, 
-            background_color=self.white,  # White
-            color=self.black,  # Black Text
+            background_color=self.white, 
+            color=self.black,  
             font_name='BoonJot-Italic',  
-            font_size=14
+            font_size=14,
+            pos_hint={'center_y': 0.5}  
         )
         
         task_button_edit.bind(on_press=self.edit_task)
@@ -175,7 +179,7 @@ class TodoLayout(BoxLayout):
         self.orientation = 'vertical'
         with self.canvas.before:
             # White background
-            Color(rgba=get_color_from_hex('#FFFFFF'))  # White
+            Color(rgba=get_color_from_hex('#FFFFFF'))  
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
 
