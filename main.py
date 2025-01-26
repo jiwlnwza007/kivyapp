@@ -12,10 +12,8 @@ from kivy.core.text import LabelBase
 from kivy.resources import resource_add_path
 from kivy.graphics import Color, Rectangle, Line
 from kivy.utils import get_color_from_hex
-from kivy.properties import ListProperty
+from kivy.properties import ListProperty, BooleanProperty
 
-# เพิ่ม path ไปยังไฟล์ฟอนต์
-resource_add_path('fonts')  # เปลี่ยน 'fonts' ให้เป็น path ที่ถูกต้อง
 
 # ลงทะเบียนฟอนต์ที่ต้องการใช้
 LabelBase.register(name='BoonJot-Italic', fn_regular='BoonJot-Italic.ttf')
@@ -44,9 +42,30 @@ class TodoApp(App):
     green = ListProperty(get_color_from_hex('#00FF00'))  # สีเขียว
     light_gray = ListProperty(get_color_from_hex('#E0E0E0'))  # สีเทาอ่อน
 
+    dark_mode = BooleanProperty(False)  # เริ่มเป็น White Theme
+
     def build(self):
-        self.task_list = []  # รายการงานที่ต้องทำ
+        self.task_list = []
         return TodoLayout()
+
+    def toggle_theme(self, instance=None):
+        self.dark_mode = not self.dark_mode  # สลับโหมด
+
+        if self.dark_mode:
+            self.white = get_color_from_hex('#1E1E1E')  # พื้นหลังดำ
+            self.black = get_color_from_hex('#FFFFFF')  # ข้อความขาว
+        else:
+            self.white = get_color_from_hex('#FFFFFF')  # พื้นหลังขาว
+            self.black = get_color_from_hex('#000000')  # ข้อความดำ
+
+        # รีเฟรช UI
+        self.root.canvas.before.clear()
+        with self.root.canvas.before:
+            Color(rgba=self.white)
+            self.root.rect = Rectangle(size=self.root.size, pos=self.root.pos)
+
+        self.root.ids.task_input.background_color = self.white
+        self.root.ids.task_input.foreground_color = self.black
 
     # ฟังก์ชั่นเพิ่มงานลงในรายการ
     def add_task(self, task_text):
