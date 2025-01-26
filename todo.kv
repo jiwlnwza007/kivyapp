@@ -13,8 +13,8 @@
             text: 'เพิ่มงาน'
             on_press: app.add_task(root.ids.task_input.text)
             font_name: 'BoonJot-Italic'
-            background_color: app.white  # White
-            color: app.black  # Black Text
+            background_color: app.white  
+            color: app.white  
             size_hint_x: 0.5
             font_size: 16
         
@@ -22,8 +22,8 @@
             text: 'ลบงานทั้งหมด'
             on_press: app.clear_tasks(None)
             font_name: 'BoonJot-Italic'
-            background_color: app.white  # White
-            color: app.black  # Black Text
+            background_color: app.white  
+            color: app.white  
             size_hint_x: 0.5
             font_size: 16
 
@@ -34,8 +34,8 @@
         height: 50
         on_text_validate: app.add_task(task_input.text)
         font_name: 'BoonJot-Italic'
-        background_color: app.white  # White
-        foreground_color: app.black  # Black Text
+        background_color: app.white  
+        foreground_color: app.black  
         hint_text_color: app.light_gray  # Light Gray
         padding: [10, 10]
         font_size: 16
@@ -61,7 +61,7 @@
         Label:
             text: "จัดเรียงตาม:"
             font_name: 'BoonJot-Italic'
-            color: app.black  # Black Text
+            color: app.black  
             halign: 'center'
             font_size: 16
         
@@ -69,8 +69,8 @@
             text: "ชื่อ"
             values: ("ชื่อ", "วันที่")
             font_name: 'BoonJot-Italic'
-            background_color: app.white  # White
-            color: app.black  # Black Text
+            background_color: app.white  
+            color: app.white
             on_text: app.sort_tasks
             size_hint_x: 0.8
             font_size: 14
