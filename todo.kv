@@ -1,102 +1,114 @@
 <TodoLayout>:
-    orientation: 'vertical'
-    padding: [20, 10]
-    spacing: 10
+    orientation: 'vertical'  # ตั้งค่าการจัดเรียงของ layout ให้เป็นแนวตั้ง
+    padding: [20, 10]  # ระยะห่างระหว่างขอบของ layout กับ widget ภายใน
+    spacing: 10  # ระยะห่างระหว่าง widget แต่ละตัวใน layout
     
+    # บล็อกนี้สำหรับปุ่ม "เพิ่มงาน" และ "ลบงานทั้งหมด"
     BoxLayout:
-        size_hint: 1, None
-        height: 60
-        spacing: 10
-        padding: [0, 10]
+        size_hint: 1, None  # กำหนดขนาดตามแนวนอนเต็มที่ แต่แนวตั้งให้เป็น None
+        height: 60  # ความสูงของ BoxLayout
+        spacing: 10  # ระยะห่างระหว่างปุ่ม
+        padding: [0, 10]  # ระยะห่างระหว่างขอบของ BoxLayout กับปุ่ม
 
+        # ปุ่มเพิ่มงาน
         Button:
-            text: 'เพิ่มงาน'
-            on_press: app.add_task(root.ids.task_input.text)
-            font_name: 'BoonJot-Italic'
-            background_color: app.white 
-            color: app.white
-            size_hint_x: 0.5
-            font_size: 16
-        
+            text: 'เพิ่มงาน'  # ข้อความในปุ่ม
+            on_press: app.add_task(root.ids.task_input.text)  # เมื่อกดปุ่มจะเรียกฟังก์ชั่น add_task
+            font_name: 'BoonJot-Italic'  # ใช้ฟอนต์ BoonJot-Italic
+            background_color: app.white  # สีพื้นหลังของปุ่ม
+            color: app.white  # สีของข้อความในปุ่ม
+            size_hint_x: 0.5  # ขนาดของปุ่มในแนวนอน
+            font_size: 16  # ขนาดฟอนต์
+
+        # ปุ่มลบงานทั้งหมด
         Button:
             text: 'ลบงานทั้งหมด'
-            on_press: app.clear_tasks(None)
+            on_press: app.clear_tasks(None)  # เมื่อกดปุ่มจะเรียกฟังก์ชั่น clear_tasks
             font_name: 'BoonJot-Italic'
             background_color: app.white
             color: app.white
             size_hint_x: 0.5
             font_size: 16
 
+    # ช่องกรอกข้อความสำหรับเพิ่มงานใหม่
     TextInput:
-        id: task_input
-        hint_text: 'กรุณากรอกงานใหม่'
-        size_hint: 1, None
-        height: 50
-        on_text_validate: app.add_task(task_input.text)
+        id: task_input  # ตั้งชื่อให้กับ TextInput
+        hint_text: 'กรุณากรอกงานใหม่'  # ข้อความที่แสดงเมื่อไม่มีข้อความ
+        size_hint: 1, None  # ขนาดเต็มในแนวนอน แต่ไม่มีขนาดในแนวตั้ง
+        height: 50  # ความสูงของ TextInput
+        on_text_validate: app.add_task(task_input.text)  # เมื่อกด Enter จะเพิ่มงาน
         font_name: 'BoonJot-Italic'
-        background_color: app.white  
-        foreground_color: app.black  
-        hint_text_color: app.light_gray  # Light Gray
-        padding: [10, 10]
-        font_size: 16
+        background_color: app.white  # สีพื้นหลัง
+        foreground_color: app.black  # สีของข้อความ
+        hint_text_color: app.light_gray  # สีของข้อความที่เป็น hint
+        padding: [10, 10]  # ระยะห่างภายในช่องกรอก
+        font_size: 16  # ขนาดฟอนต์ข้อความในช่องกรอก
     
+    # ScrollView สำหรับเลย์เอาท์ที่แสดงรายการงาน
     ScrollView:
-        size_hint: 1, 1
+        size_hint: 1, 1  # ให้ขยายเต็มพื้นที่ของ layout
         
         BoxLayout:
-            id: task_layout
-            orientation: 'vertical'
-            size_hint_y: None
-            height: self.minimum_height
-            padding: [0, 10, 0, 0]
-            spacing: 10
+            id: task_layout  # ตั้งชื่อให้กับ BoxLayout ที่เก็บรายการงาน
+            orientation: 'vertical'  # จัดเรียงงานในแนวตั้ง
+            size_hint_y: None  # ความสูงของ BoxLayout ไม่มีขนาดตามขนาดของ container
+            height: self.minimum_height  # ความสูงของ BoxLayout คำนวณจากจำนวน widget ภายใน
+            padding: [0, 10, 0, 0]  # ระยะห่างจากขอบ
+            spacing: 10  # ระยะห่างระหว่างงานแต่ละอัน
     
+    # GridLayout สำหรับตัวเลือกการจัดเรียงงานและเปิด/ปิดการแจ้งเตือน
     GridLayout:
-        cols: 2
-        size_hint_y: None
-        height: 100
-        spacing: 10
-        padding: [0, 10]
-        
+        cols: 2  # ใช้ 2 คอลัมน์
+        size_hint_y: None  # ไม่มีขนาดในแนวตั้ง
+        height: 100  # ความสูงของ GridLayout
+        spacing: 10  # ระยะห่างระหว่างคอลัมน์
+        padding: [0, 10]  # ระยะห่างจากขอบ
+
+        # เลเบลสำหรับการจัดเรียง
         Label:
             text: "จัดเรียงตาม:"
             font_name: 'BoonJot-Italic'
-            color: app.black  
-            halign: 'center'
+            color: app.black  # สีข้อความ
+            halign: 'center'  # จัดข้อความกลาง
             font_size: 16
         
+        # Spinner สำหรับเลือกการจัดเรียง
         Spinner:
-            text: "ชื่อ"
-            values: ("ชื่อ", "วันที่")
+            text: "ชื่อ"  # ค่าเริ่มต้น
+            values: ("ชื่อ", "วันที่")  # ตัวเลือกที่สามารถเลือกได้
             font_name: 'BoonJot-Italic'
-            background_color: app.white  
-            color: app.white 
-            on_text: app.sort_tasks
-            size_hint_x: 0.8
+            background_color: app.white  # สีพื้นหลังของ Spinner
+            color: app.white  # สีข้อความใน Spinner
+            on_text: app.sort_tasks  # เมื่อเลือกค่าใหม่ จะเรียกฟังก์ชั่น sort_tasks
+            size_hint_x: 0.8  # ขนาดในแนวนอน
             font_size: 14
         
+        # เลเบลสำหรับเปิดการแจ้งเตือน
         Label:
             text: "เปิดการแจ้งเตือน"
             font_name: 'BoonJot-Italic'
-            color: app.black  
-            halign: 'center'
+            color: app.black  # สีข้อความ
+            halign: 'center'  # จัดข้อความกลาง
             font_size: 16
         
+        # Switch สำหรับเปิด/ปิดการแจ้งเตือน
         Switch:
-            active: True
-            on_active: app.toggle_notifications
-            size_hint_x: 0.2
+            active: True  # เปิดการแจ้งเตือนโดยเริ่มต้น
+            on_active: app.toggle_notifications  # เมื่อเปลี่ยนสถานะจะเรียกฟังก์ชั่น toggle_notifications
+            size_hint_x: 0.2  # ขนาดของ switch ในแนวนอน
 
+# กำหนดสไตล์พื้นฐานของปุ่ม
 <Button>:
     font_name: 'BoonJot-Italic'
-    background_color: app.white  
-    color: app.black 
-    font_size: 16
+    background_color: app.white  # สีพื้นหลังของปุ่ม
+    color: app.black  # สีข้อความในปุ่ม
+    font_size: 16  # ขนาดฟอนต์
 
+# กำหนดสไตล์พื้นฐานของ Label
 <Label>:
     font_name: 'BoonJot-Italic'
-    color: app.black  
-    halign: 'center'
-    valign: 'middle'
-    text_size: self.size
-    font_size: 16
+    color: app.black  # สีข้อความ
+    halign: 'center'  # จัดข้อความกลาง
+    valign: 'middle'  # จัดข้อความกลางในแนวตั้ง
+    text_size: self.size  # กำหนดขนาดข้อความให้ตรงกับขนาดของ label
+    font_size: 16  # ขนาดฟอนต์
